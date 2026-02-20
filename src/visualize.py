@@ -1,3 +1,4 @@
+# import the logging, matplotlib and os:
 import matplotlib.pyplot as plt
 import logging
 import os
