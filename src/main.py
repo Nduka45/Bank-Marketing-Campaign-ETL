@@ -1,4 +1,4 @@
-# src/main.py
+#import os and define the function for data transformation
 
 import os
 from transform import (
@@ -9,7 +9,7 @@ from transform import (
     clean_economics_data
 )
 
-
+# define the path to store the data after processing: ouput path
 RAW_PATH = "data/raw/"
 OUTPUT_PATH = "data/processed/"
 
