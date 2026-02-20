@@ -1,5 +1,4 @@
-# src/main.py
-
+from visualize import plot_age_distribution, plot_subscription_rate
 import os
 from transform import (
     load_csv,
@@ -35,6 +34,15 @@ def run_pipeline():
     economics_df = clean_economics_data(economics_df)
 
     print("Data cleaned.")
+
+    # Generate visuals
+    plot_age_distribution(bank_df)
+
+    # If your dataset uses "y" instead of "subscribed"
+    if "y" in bank_df.columns:
+        bank_df.rename(columns={"y": "subscribed"}, inplace=True)
+
+    plot_subscription_rate(bank_df)
 
     # Load (Save cleaned files)
     os.makedirs(OUTPUT_PATH, exist_ok=True)
