@@ -30,22 +30,11 @@ def run_pipeline():
     bank_df = clean_columns(bank_df)
     campaign_df = clean_columns(campaign_df)
     economics_df = clean_columns(economics_df)
-
-    # Transforming the data to make important insights
-    bank_df = clean_bank_data(bank_df)
-    campaign_df = clean_campaign_data(campaign_df)
-    economics_df = clean_economics_data(economics_df)
-
+    
     print("Data cleaned.")
 
-    # Counting the campaign_outcome
-
-    if "campaign_outcome" in bank_df.columns:
-        bank_df.rename(columns={"campaign_outcome": "subscribed"}, inplace=True)
-
-    # Generate visuals
-    plot_age_distribution(bank_df)
-    plot_subscription_rate(bank_df)
+    # Generate all visuals
+    generate_all_plots(bank_df)
 
     # Save outputs
     os.makedirs(OUTPUT_PATH, exist_ok=True)
@@ -56,5 +45,3 @@ def run_pipeline():
 
     print("ETL pipeline completed successfully.")
 
-if __name__ == "__main__":
-    run_pipeline()
