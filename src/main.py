@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 # Relative imports for src package
-from .visualize import plot_age_distribution, plot_subscription_rate
+from .visualize import generate_all_plots
 from .transform import (
     load_csv,
     clean_columns,
