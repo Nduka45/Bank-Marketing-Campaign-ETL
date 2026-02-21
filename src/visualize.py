@@ -114,12 +114,13 @@ def plot_contact_duration(df):
     fig, ax = plt.subplots()
 
     sns.boxplot(
-        data=df,
-        x="campaign_outcome",
-        y="contact_duration",
-        palette=["red", "green"],
-        ax=ax,
-    )
+    x="campaign_outcome",
+    y="age",
+    hue="campaign_outcome",
+    data=df,
+    palette="Set2",
+    legend=False
+)
 
     ax.set_title("Contact Duration vs Subscription")
     ax.set_xlabel("Subscribed")
