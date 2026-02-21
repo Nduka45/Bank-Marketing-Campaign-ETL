@@ -29,12 +29,13 @@ def plot_subscription_rate(df):
 
     os.makedirs(REPORT_PATH, exist_ok=True)
 
-    if "subscribed" in df.columns:
-        counts = df["subscribed"].value_counts()
-    elif "y" in df.columns:
-        counts = df["y"].value_counts()
-    else:
+    if "subscribed" not in df.columns and "y" in df.columns:
+        df = df.rename(columns={"y": "subscribed"})
+
+    if "subscribed" not in df.columns:
         raise ValueError("No subscription column found ('subscribed' or 'y')")
+
+    counts = df["subscribed"].value_counts()
 
     plt.figure()
     plt.bar(counts.index.astype(str), counts.values, color="orange")
