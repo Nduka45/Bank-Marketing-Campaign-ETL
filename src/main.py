@@ -33,6 +33,10 @@ def run_pipeline():
     
     print("Data cleaned.")
 
+    if "campaign_outcome" not in bank_df.columns:
+    if "subscribed" in bank_df.columns:
+        bank_df.rename(columns={"subscribed": "campaign_outcome"}, inplace=True)
+
     # Generate all visuals
     generate_all_plots(bank_df)
 
