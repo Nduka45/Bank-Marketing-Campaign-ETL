@@ -38,12 +38,12 @@ def run_pipeline():
 
     print("Data cleaned.")
 
-    # Generate visuals
     # Rename column first
 
     if "y" in bank_df.columns:
         bank_df.rename(columns={"y": "subscribed"}, inplace=True)
 
+    # Generate visuals
     plot_age_distribution(bank_df)
     plot_subscription_rate(bank_df)
 
