@@ -1,8 +1,9 @@
-#import os and define the function for data transformation
 import os
 from pathlib import Path
-from visualize import plot_age_distribution, plot_subscription_rate
-from transform import (
+
+# Relative imports because src is a package
+from .visualize import plot_age_distribution, plot_subscription_rate
+from .transform import (
     load_csv,
     clean_columns,
     clean_bank_data,
@@ -12,14 +13,13 @@ from transform import (
 
 # Get project root automatically
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 RAW_PATH = BASE_DIR / "data" / "raw"
 OUTPUT_PATH = BASE_DIR / "data" / "processed"
 
 def run_pipeline():
     print("Starting ETL pipeline...")
 
-      # Extract
+    # Extract
     bank_df = load_csv(RAW_PATH / "bank_marketing.csv")
     campaign_df = load_csv(RAW_PATH / "campaign.csv")
     economics_df = load_csv(RAW_PATH / "economics.csv")
@@ -54,7 +54,6 @@ def run_pipeline():
     economics_df.to_csv(OUTPUT_PATH / "economics_cleaned.csv", index=False)
 
     print("ETL pipeline completed successfully.")
-
 
 if __name__ == "__main__":
     run_pipeline()
