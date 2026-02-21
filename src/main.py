@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-# Relative imports because src is a package
+# Relative imports for src package
 from .visualize import plot_age_distribution, plot_subscription_rate
 from .transform import (
     load_csv,
@@ -11,7 +11,7 @@ from .transform import (
     clean_economics_data
 )
 
-# Get project root automatically
+# Get project root automatically to process the data
 BASE_DIR = Path(__file__).resolve().parent.parent
 RAW_PATH = BASE_DIR / "data" / "raw"
 OUTPUT_PATH = BASE_DIR / "data" / "processed"
@@ -26,22 +26,22 @@ def run_pipeline():
 
     print("Files loaded.")
 
-    # Standardize columns
+    # Standardizing each DataFrame for an actual result
     bank_df = clean_columns(bank_df)
     campaign_df = clean_columns(campaign_df)
     economics_df = clean_columns(economics_df)
 
-    # Transform
+    # Transforming the data to make important insights
     bank_df = clean_bank_data(bank_df)
     campaign_df = clean_campaign_data(campaign_df)
     economics_df = clean_economics_data(economics_df)
 
     print("Data cleaned.")
 
-    # Rename column first
+    # Counting the campaign_outcome
 
-    if "y" in bank_df.columns:
-        bank_df.rename(columns={"y": "subscribed"}, inplace=True)
+    if "campaign_outcome" in bank_df.columns:
+        bank_df.rename(columns={"campaign_outcome": "subscribed"}, inplace=True)
 
     # Generate visuals
     plot_age_distribution(bank_df)
