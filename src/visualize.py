@@ -29,6 +29,7 @@ def plot_subscription_rate(df):
 
     os.makedirs(REPORT_PATH, exist_ok=True)
 
+    # Rename 'y' to 'subscribed' if present
     if "subscribed" not in df.columns and "y" in df.columns:
         df = df.rename(columns={"y": "subscribed"})
 
