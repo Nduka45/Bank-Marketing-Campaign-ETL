@@ -1,9 +1,11 @@
 #import matplotlib, loggings and os for visualization
+
 import matplotlib.pyplot as plt
 import logging
 import os
 
 REPORT_PATH = "reports/figures/"
+
 def plot_subscription_rate(outcome_df):
     logging.info("Generating subscription rate plot...")
 

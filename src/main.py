@@ -1,5 +1,7 @@
-from visualize import plot_age_distribution, plot_subscription_rate
+#import os and define the function for data transformation
 import os
+from pathlib import Path
+from visualize import plot_age_distribution, plot_subscription_rate
 from transform import (
     load_csv,
     clean_columns,
@@ -8,18 +10,19 @@ from transform import (
     clean_economics_data
 )
 
+# Get project root automatically
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-RAW_PATH = "data/raw/"
-OUTPUT_PATH = "data/processed/"
-
+RAW_PATH = BASE_DIR / "data" / "raw"
+OUTPUT_PATH = BASE_DIR / "data" / "processed"
 
 def run_pipeline():
     print("Starting ETL pipeline...")
 
-    # Extract
-    bank_df = load_csv(os.path.join(RAW_PATH, "bank_marketing.csv"))
-    campaign_df = load_csv(os.path.join(RAW_PATH, "campaign.csv"))
-    economics_df = load_csv(os.path.join(RAW_PATH, "economics.csv"))
+      # Extract
+    bank_df = load_csv(RAW_PATH / "bank_marketing.csv")
+    campaign_df = load_csv(RAW_PATH / "campaign.csv")
+    economics_df = load_csv(RAW_PATH / "economics.csv")
 
     print("Files loaded.")
 
@@ -28,7 +31,7 @@ def run_pipeline():
     campaign_df = clean_columns(campaign_df)
     economics_df = clean_columns(economics_df)
 
-    # Transform per dataset
+    # Transform
     bank_df = clean_bank_data(bank_df)
     campaign_df = clean_campaign_data(campaign_df)
     economics_df = clean_economics_data(economics_df)
@@ -38,18 +41,17 @@ def run_pipeline():
     # Generate visuals
     plot_age_distribution(bank_df)
 
-    # If your dataset uses "y" instead of "subscribed"
     if "y" in bank_df.columns:
         bank_df.rename(columns={"y": "subscribed"}, inplace=True)
 
     plot_subscription_rate(bank_df)
 
-    # Load (Save cleaned files)
+    # Save outputs
     os.makedirs(OUTPUT_PATH, exist_ok=True)
 
-    bank_df.to_csv(os.path.join(OUTPUT_PATH, "bank_cleaned.csv"), index=False)
-    campaign_df.to_csv(os.path.join(OUTPUT_PATH, "campaign_cleaned.csv"), index=False)
-    economics_df.to_csv(os.path.join(OUTPUT_PATH, "economics_cleaned.csv"), index=False)
+    bank_df.to_csv(OUTPUT_PATH / "bank_cleaned.csv", index=False)
+    campaign_df.to_csv(OUTPUT_PATH / "campaign_cleaned.csv", index=False)
+    economics_df.to_csv(OUTPUT_PATH / "economics_cleaned.csv", index=False)
 
     print("ETL pipeline completed successfully.")
 
